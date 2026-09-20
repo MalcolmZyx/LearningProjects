@@ -1,0 +1,28 @@
+A) Distinguish between noise and outliers. Be sure to consider the following questions.  
+(a) Is noise ever interesting or desirable? Outliers?  
+- noise is never desirable, but yes Outliers are interesting/desirable
+(b) Can noise objects be outliers?  
+- Yes, noise can be outliers since they are distorted by nature. 
+(c) Are noise objects always outliers?  
+- No, they're not always outliers, they're often times just additional false objects. 
+(d) Are outliers always noise objects?
+- No, they are never noise objects. 
+
+B) Consider the following sets of values. For each set find the mean, Standard Deviation  
+and Bias  
+a. Set A = {1.2, 0.87, 1.013, 1.0001, and 0.986}
+- Mean: 1.01382
+- Std: 0.1187
+- Bias: 0.01382
+b. Set B = {6.215, 6.23, 6.33, 6.001, and 6.123} 
+- Mean: 6.1998
+- Std: 0.11270742
+- Bias: 0.1998
+c. Set C = {8.222, 8.452, 8.0001, 8.201, and 8.111}
+- Mean: 8.19722
+- Std: 0.02796
+- Bias: 8.19722 - 8 = 0.19722
+d. Set D = {12.205, 12.099, 12.103, 12.101, and 11.896}
+- Mean: 12.0808
+- Std: 0.0127022
+- Bias: 12.0808 - 12 = 0.0808

@@ -1,0 +1,167 @@
+import numpy as np
+import sys
+
+# --- Part 1: Setup - Create the necessary data files ---
+
+# Create file1.txt 
+file1_data = " ".join(map(str, [
+    1,	2,	3,	4,	5,	6,
+    7,	8,	9,	10,	11,	12,
+    13,	14,	15,	16,	17,	18,
+    19,	20,	21,	22,	23,	24,
+    25,	26,	27,	28,	29,	30,
+    31,	32,	33,	34,	35,	36,
+]))
+with open("file1.txt", "w") as f:
+    f.write(file1_data)
+
+# Create file2.txt
+file2_data = " ".join(map(str, [
+    123,	21,	    320,	140,	512,	160,
+    117,	810,	910,	123,	1210,	220,
+    233,	11,	    121,	1360,	10,	    1120,
+    1090,	222,	111,	124,	1230,   1140,
+    12150,	12620,	2720,	2118,	2191,	1310,
+    3110,	11320,	1301,	3140,	1210,	3160,
+]))
+with open("file2.txt", "w") as f:
+    f.write(file2_data)
+
+# Create the modified version of file2.txt with zeros for the division test 
+file2_modified_data = " ".join(map(str, [
+    123,	21,	    320,	140,	512,	160,
+    117,	810,	910,	123,	1210,	220,
+    0,	    11,	    121,	0,	    10,	    1120,
+    1090,	222,	111,	124,	1230,   1140,
+    12150,	0,	    2720,	2118,	2191,	1310,
+    3110,	11320,	1301,	3140,	1210,	3160,
+]))
+with open("file2_modified.txt", "w") as f:
+    f.write(file2_modified_data)
+
+# --- Part 2: Object-Oriented Program Definition ---
+
+class myMatrix:
+    def GetMatrix(self, N, filename):
+        """
+        Reads N*N numbers from a file and returns an NxN numpy matrix.
+        """
+        try:
+            with open(filename, 'r') as f:
+                # Read file, split into numbers, and convert to integers
+                numbers = list(map(int, f.read().split()))
+        except FileNotFoundError:
+            # Exit if the file does not exist
+            sys.exit(f"Error: ***** File '{filename}' not found. The program stops in here.")
+        
+        # Check if there are enough numbers in the file using short-circuiting
+        (len(numbers) < N*N) and sys.exit(f"Error: ***** Not enough numbers in {filename} for a {N}x{N} matrix.")
+        
+        # Take the first N*N numbers, convert to a numpy array, and reshape into an NxN matrix
+        matrix = np.array(numbers[:N*N]).reshape((N, N))
+        return matrix
+
+    def Product(self, M1, M2):
+        """
+        Calculates the element-by-element product of two matrices.
+        """
+        return M1 * M2
+
+    def DotProduct(self, M1, M2):
+        """
+        Calculates the standard matrix multiplication (dot product) of two matrices.
+        """
+        return np.dot(M1, M2)
+
+    def Division(self, M1, M2):
+        """
+        Performs element-by-element division. Returns 'undef' for any division by zero.
+        Formats the result to two decimal places.
+        """
+        # Create a result matrix of type 'object' filled with 'undef'
+        result_matrix = np.full(M1.shape, 'undef', dtype=object)
+        
+        # Use a context manager to suppress warnings for division by zero
+        with np.errstate(divide='ignore', invalid='ignore'):
+            # Perform the division, which will result in 'inf' or 'nan' for zeros
+            division_result = M1.astype(float) / M2.astype(float)
+        
+        # Create a boolean mask to identify where the division resulted in a finite number
+        is_finite_mask = np.isfinite(division_result)
+        
+        # Get the finite values from the division result
+        finite_values = division_result[is_finite_mask]
+        
+        # Format the finite values to strings with 2 decimal places using a vectorized operation
+        formatted_values = np.char.mod('%.2f', finite_values)
+        
+        # Place the formatted strings back into the result matrix where the values were finite
+        result_matrix[is_finite_mask] = formatted_values
+        
+        return result_matrix
+        
+def print_matrix(M, title):
+    """
+    Helper function to print a matrix with a title and consistent formatting.
+    """
+    print(title)
+    # Use numpy's savetxt to print the array to the console with tab delimiters
+    # The '%s' format handles both numbers and strings (like 'undef') correctly
+    np.savetxt(sys.stdout, M, fmt='%s', delimiter='\t')
+    print("=================================================================================")
+
+# --- Part 3: Main Program Execution ---
+
+if __name__ == "__main__":
+    # 1) Get a size for a square matrix
+    try:
+        n_str = input(">> Enter the dimension of your matrix: ")
+        N = int(n_str)
+    except (ValueError, EOFError):
+        sys.exit("Error: ***** Invalid input. Please enter an integer.")
+
+    # Validate N using short-circuiting to avoid 'if' statements
+    (N <= 3) and sys.exit("Error: ***** This dimension is out of bound. The program stops in here.\n(*********************** End of the Program ***********************)")
+    (N >= 8) and sys.exit("Error: ***** We can only handle up to 8 dimensions at this time. The program stops in here.\n(*********************** End of the Program ***********************)")
+
+    # 2) Create an object and call it myMatrix
+    myMatrix_obj = myMatrix()
+
+    # Define which file to use for the second matrix.
+    # To run the 'modified' case, change "file2.txt" to "file2_modified.txt"
+    file1 = "file1.txt"
+    file2 = "file2.txt"
+    file2_modified = "file2_modified.txt" 
+    
+    # 3) M1 = myMatrix.GetMatrix(N, file1)
+    M1 = myMatrix_obj.GetMatrix(N, file1)
+
+    # 4) M2 = myMatrix.GetMatrix(N, file2)
+    M2 = myMatrix_obj.GetMatrix(N, file2) 
+
+    # 5) Print M1
+    print_matrix(M1, "\nThe content of the first matrix is:")
+
+    # 6) Print M2
+    print_matrix(M2, "The content of the second matrix is:")
+
+    # 7) M1_Multiply_M2 = myMatrix.Product(M1, M2)
+    M1_Multiply_M2 = myMatrix_obj.Product(M1, M2)
+    
+    # 8) Print M1_Multiply_M2
+    print_matrix(M1_Multiply_M2, "The product of the two matrices is:")
+
+    # 9) M1_DotMultiply_M2 = myMatrix.DotProduct(M1, M2)
+    M1_DotMultiply_M2 = myMatrix_obj.DotProduct(M1, M2)
+
+    # 10) Print M1_DotMultiply_M2
+    print_matrix(M1_DotMultiply_M2, "The dot-product of the two matrices is:")
+
+    # 11) M1_Divde_M2 = myMatrix.Division(M1, M2)
+    M1_Divide_M2 = myMatrix_obj.Division(M1, M2)
+    
+    # 12) Print M1_Divde_M2
+    print_matrix(M1_Divide_M2, "The result of matrix1 divided by matrix2 is:")
+
+    print("(*********************** End of the Program ***********************)")
+

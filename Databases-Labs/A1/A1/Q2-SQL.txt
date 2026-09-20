@@ -1,0 +1,59 @@
+CREATE TABLE Department
+(
+    PhysDept            NUMBER,
+    DeptSupervisorID     NUMBER,
+        CONSTRAINT DeptPK PRIMARY KEY(PhysDept)
+);
+
+CREATE TABLE Treatment
+(
+    TreatID     NUMBER, 
+    TreatCost   NUMBER(10,2),
+    TreatDesc   CHAR(200),
+        CONSTRAINT TreatPK PRIMARY KEY(TreatID),
+        CONSTRAINT CheckTC CHECK(TreatCost >= 50.00)
+);
+
+CREATE TABLE Room
+(
+    RoomNo      NUMBER,
+    RoomPhone   CHAR(8),
+    RoomRate    NUMBER(10,2),
+        CONSTRAINT RoomPK PRIMARY KEY(RoomNo),
+        CONSTRAINT CheckRN CHECK(RoomNo >= 100 AND RoomNo <= 999),
+        CONSTRAINT CheckRR CHECK(RoomRate >= 30.00 AND RoomRate <= 100.00)
+);
+
+CREATE TABLE Physician
+(
+    PhysID      NUMBER,
+    PhysDept	NUMBER,
+    TreatID	NUMBER,
+    PhysName    CHAR(50)
+        CONSTRAINT CheckPN NOT NULL,
+        CONSTRAINT PhysPK PRIMARY KEY(PhysID),
+	CONSTRAINT Phys_De_FK FOREIGN KEY(PhysDept)
+		REFERENCES Department(PhysDept) ON DELETE CASCADE,
+	CONSTRAINT Phys_TrFK FOREIGN KEY(TreatID)
+		REFERENCES Treatment(TreatID) ON DELETE CASCADE
+);
+
+CREATE TABLE Patient
+(
+    PatientID           NUMBER, 
+    PatientName         CHAR(50)
+        CONSTRAINT CheckPaN NOT NULL,  
+    AdmitDate           DATE,
+    HospitalStayDays    NUMBER,
+    PatientAddress      CHAR(200)
+        CONSTRAINT CheckPatAdd NOT NULL,
+    PhysID		NUMBER,
+    RoomNo		NUMBER,
+        CONSTRAINT PatPK PRIMARY KEY(PatientID),
+        CONSTRAINT CheckHSD CHECK(HospitalStayDays >= 0),
+	CONSTRAINT Pat_PhysFK FOREIGN KEY(PhysID)
+		REFERENCES Physician(PhysID) ON DELETE CASCADE,
+	CONSTRAINT Pat_RoomFK FOREIGN KEY(RoomNO)
+		REFERENCES Room(RoomNo) ON DELETE CASCADE
+);
+

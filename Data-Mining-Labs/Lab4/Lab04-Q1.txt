@@ -1,0 +1,9 @@
+1) Give at least two advantages to working with data stored in text files instead of in a binary format.  
+   - Two advantages that text files have are understandability/readability as well as less dimensionality. An additional advantage would be portability. 
+1) Can you think of a situation in which identification numbers would be useful for prediction? One example is Student IDs are a good predictor of graduation date.   
+- Zipcode and the area code from your phone number, can both be used to predict the area you live in. 
+3) An educational psychologist wants to use association analysis to analyze test results. The test consists of 100 questions with four possible answers each.  
+a. What type of attributes would you have, and  
+- discrete binary attributes
+b. how many of them are there? 
+- 400 (100 questions x 4 options)

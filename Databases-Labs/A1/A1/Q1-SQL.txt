@@ -1,0 +1,50 @@
+CREATE TABLE Product
+( 
+    ProductId           NUMBER,    -- no specified precision or scale
+    ProductDescription  CHAR(200), -- up to 200 characters
+        CONSTRAINT ProdPK PRIMARY KEY(ProductId) 
+        -- automatically NOT NULL & UNIQUE
+); 
+
+CREATE TABLE Item
+(
+    ItemNum             NUMBER,    -- no specified precision or scale
+    ItemDescription     CHAR(200), -- up to 200 characters
+        CONSTRAINT ItemPK PRIMARY KEY(ItemNum)
+        -- automatically NOT NULL & UNIQUE
+); 
+
+CREATE TABLE Receipt
+(
+    ReceiptNumber    NUMBER, -- no specified precision or scale
+    SalesDate       DATE,
+        CONSTRAINT RecPK PRIMARY KEY(ReceiptNumber)
+        -- automatically NOT NULL & UNIQUE
+);
+
+CREATE TABLE Item_Product
+(
+    QuantityUsed    NUMBER, -- no specified precision or scale
+    ProductId       NUMBER, -- no specified precision or scale
+    ItemNum         NUMBER, -- no specified precision or scale
+        CONSTRAINT CheckQU CHECK(QuantityUsed >= 0),
+        CONSTRAINT It_and_PdPK PRIMARY KEY(ProductId, ItemNum),
+        CONSTRAINT It_and_PdIdFK FOREIGN KEY(ProductId)
+            REFERENCES Product(ProductId) ON DELETE CASCADE,
+        CONSTRAINT ItNum_and_PdFK FOREIGN KEY(ItemNum)
+            REFERENCES Item(ItemNum) ON DELETE CASCADE 
+);
+
+CREATE TABLE Receipt_Product
+(
+    QuantitySold    NUMBER, -- no specified precision or scale
+    ProductId       NUMBER, -- no specified precision or scale
+    ReceiptNumber    NUMBER, -- no specified precision or scale
+        CONSTRAINT CheckQS CHECK(QuantitySold >= 0),
+        CONSTRAINT Re_and_PdPK PRIMARY KEY(ProductId, ReceiptNumber),
+        CONSTRAINT Re_and_PdIdFK FOREIGN KEY(ProductId)
+            REFERENCES Product(ProductId) ON DELETE CASCADE,
+        CONSTRAINT ReNum_and_PdFK FOREIGN KEY(ReceiptNumber)
+            REFERENCES Receipt(ReceiptNumber) ON DELETE CASCADE
+);
+

@@ -1,0 +1,61 @@
+1. Time in terms of AM or PM
+	(continuous, quantitative, nominal)
+
+2. Brightness as measured by a light meter.
+	(continuous, quantitative, ratio)
+
+3. Brightness as measured by people’s judgments:
+	(discrete, qualitative, ordinal)
+
+4. Angles as measured in degrees between 0◦ and 360:
+	(continuous, quantitative, interval) 
+
+5. Bronze, Silver, and Gold medals as awarded at the Olympics.
+	(discrete, qualitative, ordinal)  
+
+6. Number of patients in a hospital.
+	(discrete, quantitative, ratio) 
+
+7. Ability to pass light in terms of the following values: opaque, translucent, transparent.
+	(discrete, qualitative, ordinal) 
+
+8. Military rank.
+	(discrete, qualitative, ordinal)
+
+9. Density of a substance in grams per cubic centimeter.
+	(continuous, quantitative, ratio)
+
+10. Coat check number. (When you attend an event, you can often give your coat to someone who,
+in turn, gives you a number that you can use to claim your coat when you leave.
+	(discrete, qualitative, nominal) 
+
+11. Blood type (e.g., A, B, AB, O)
+	(discrete, qualitative, nominal) 
+
+12. Temperature measured in Fahrenheit
+	(continuous, quantitative, ratio) 
+
+13. Number of books on a library shelf
+	(discrete, quantitative, ratio) 
+
+14. Movie rating (e.g., G, PG, PG-13, R)
+	(discrete, qualitative, ordinal)
+
+15. Zip code
+	(discrete, qualitative, nominal) 
+
+16. Height of a student in centimeters
+	(continuous, quantitative, ratio)
+
+17. Level of agreement on a survey (e.g., Strongly Disagree to Strongly Agree)
+	(discrete, qualitative, ordinal)
+
+18. Jersey number of an athlete
+	(discrete, qualitative, nominal)
+
+19. Daily rainfall in millimeters
+	(continuous, quantitative, ratio)
+
+20. Ranking of runners in a race (1st, 2nd, 3rd...)
+	(discrete, qualitative, ordinal) 
+
